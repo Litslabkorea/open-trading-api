@@ -2,7 +2,7 @@
 import websockets
 import json
 import requests
-import os
+import os, sys
 import asyncio
 import time
 
@@ -189,9 +189,11 @@ async def connect():
 
             # send json, 체결통보는 tr_key 입력항목이 상이하므로 분리를 한다.
             if cmd == '5' or cmd == '6' or cmd == '7' or cmd == '8':
-                senddata = '{"header":{"approval_key":"' + g_approval_key + '","custtype":"'+custtype+'","tr_type":"' + tr_type + '","content-type":"utf-8"},"body":{"input":{"tr_id":"' + tr_id + '","tr_key":"' + htsid + '"}}}'
-            else :
-                senddata = '{"header":{"approval_key":"' + g_approval_key + '","custtype":"'+custtype+'","tr_type":"' + tr_type + '","content-type":"utf-8"},"body":{"input":{"tr_id":"' + tr_id + '","tr_key":"' + stockcode + '"}}}'
+                # Original: senddata = '{"header":{"approval_key":"' + g_approval_key + '","custtype":"'+custtype+'","tr_type":"' + tr_type + '","content-type":"utf-8"},"body":{"input":{"tr_id":"' + tr_id + '","tr_key":"' + htsid + '"}}}'
+                senddata = f'{{"header":{{"approval_key":"{g_approval_key}","custtype":"{custtype}","tr_type":"{tr_type}","content-type":"utf-8"}},"body":{{"input":{{"tr_id":"{tr_id}","tr_key":"{htsid}"}}}}}}'
+            else:
+                # Original: senddata = '{"header":{"approval_key":"' + g_approval_key + '","custtype":"'+custtype+'","tr_type":"' + tr_type + '","content-type":"utf-8"},"body":{"input":{"tr_id":"' + tr_id + '","tr_key":"' + stockcode + '"}}}'
+                senddata = f'{{"header":{{"approval_key":"{g_approval_key}","custtype":"{custtype}","tr_type":"{tr_type}","content-type":"utf-8"}},"body":{{"input":{{"tr_id":"{tr_id}","tr_key":"{stockcode}"}}}}}}'
 
             print('Input Command is :', senddata)
 
@@ -243,9 +245,9 @@ async def connect():
                                 print("### TRID [%s] KEY[%s] IV[%s]" % (trid, aes_key, aes_iv))
 
                     elif trid == "PINGPONG":
-                        print("### RECV [PINGPONG] [%s]" % (data))
+                        print(f"### RECV [PINGPONG] [{data}]")
                         await websocket.pong(data)
-                        print("### SEND [PINGPONG] [%s]" % (data))
+                        print(f"### SEND [PINGPONG] [{data}]")
 
     # ----------------------------------------
     # 모든 함수의 공통 부분(Exception 처리)
