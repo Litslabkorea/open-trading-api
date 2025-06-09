@@ -27,8 +27,8 @@ def aes_cbc_base64_dec(key, iv, cipher_text):
 
 # 웹소켓 접속키 발급
 def get_approval(key, secret):
-    # url = https://openapivts.koreainvestment.com:29443' # 모의투자계좌     
-    url = 'https://openapi.koreainvestment.com:9443' # 실전투자계좌
+    url = 'https://openapivts.koreainvestment.com:29443' # 모의투자계좌     
+    # url = 'https://openapi.koreainvestment.com:9443' # 실전투자계좌
     headers = {"content-type": "application/json"}
     body = {"grant_type": "client_credentials",
             "appkey": key,
@@ -125,18 +125,28 @@ def stocksigningnotice(data, key, iv):
         print("%s  [%s]" % (menu, pValue[i]))
         i += 1
         
-        
+
+
+# 모의 투자 환경 (VIRTUAL)
+'''
+KIS_APP_KEY_VIRTUAL="PSLXjIYYt98CXw3YIhPcgwWWazNYLWMlzq0V"
+KIS_APP_SECRET_VIRTUAL="InYXPFhizM4T3E7nyvJq9dn68uxnb7Cx+6JKfFAljXiLylAq4fhUZr9W/n0l9Vc3jyj4AKxgaWaA9vMcZ2AETnAWaPzcM07LqTAHY7fLtTOTrUU0uM0OGBuVIM146d2b6fFNlAkwhI1Zucp3H1KLvjeA1H6OwhVtTgyH0jFCfhL1aRTGRho="
+KIS_ACCOUNT_VIRTUAL="50138310"
+'''
 async def connect():
     
     try:
         # 웹 소켓에 접속.( 주석은 koreainvest test server for websocket)
         ## 시세데이터를 받기위한 데이터를 미리 할당해서 사용한다.
 
-        g_appkey = '앱키를 입력하세요'
-        g_appsecret = '앱 시크릿키를 입력하세요'
+        g_appkey = 'PSLXjIYYt98CXw3YIhPcgwWWazNYLWMlzq0V'
+        g_appsecret = 'InYXPFhizM4T3E7nyvJq9dn68uxnb7Cx+6JKfFAljXiLylAq4fhUZr9W/n0l9Vc3jyj4AKxgaWaA9vMcZ2AETnAWaPzcM07LqTAHY7fLtTOTrUU0uM0OGBuVIM146d2b6fFNlAkwhI1Zucp3H1KLvjeA1H6OwhVtTgyH0jFCfhL1aRTGRho='
 
         stockcode = '005930'    # 테스트용 임시 종목 설정, 삼성전자
-        htsid = 'HTS ID를 입력하세요'    # 체결통보용 htsid 입력
+        
+        # htsid = 'HTS ID를 입력하세요'    # 체결통보용 htsid 입력
+        htsid = '1'    # 체결통보용 htsid 입력
+
         custtype = 'P'      # customer type, 개인:'P' 법인 'B'
 
         # url = 'ws://ops.koreainvestment.com:31000' # 모의투자계좌
