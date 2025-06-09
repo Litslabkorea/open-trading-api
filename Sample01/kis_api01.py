@@ -2,7 +2,8 @@
 """
 Created on Tue Feb 15 07:56:54 2022
 """
-#kis_api module 을 찾을 수 없다는 에러가 나는 경우 sys.path에 kis_api.py 가 있는 폴더를 추가해준다.
+# kis_api 모듈을 찾을 수 없는 경우, sys.path에 kis_api.py 파일이 있는 상대 경로를 추가하는 방법을 설명합니다.   
+# 예시: sys.path.append('./kis_api') 또는 sys.path.append('../kis_api')
 import kis_auth as ka
 import kis_domstk as kb
 

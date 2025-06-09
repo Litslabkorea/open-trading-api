@@ -29,6 +29,10 @@ def aes_cbc_base64_dec(key, iv, cipher_text):
     :return: Base64-AES256 decodec str
     """
     cipher = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv.encode('utf-8'))
+    
+    # unpad: AES 암호화 시 추가된 패딩을 제거하는 함수
+    # 예: "Hello" -> "Hello\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b" (16바이트 블록에 맞추기 위해 패딩 추가)
+    #     unpad 후 -> "Hello" (원래 데이터만 남음)
     return bytes.decode(unpad(cipher.decrypt(b64decode(cipher_text)), AES.block_size))
 
 

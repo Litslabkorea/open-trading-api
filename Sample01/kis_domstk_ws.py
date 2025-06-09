@@ -337,6 +337,12 @@ def _dparse(data):
             pass
 
         if tr_id in (KIS_WSReq.CONTRACT, KIS_WSReq.BID_ASK):  # 실시간체결, 실시간호가
+            # StringIO(d1[3])를 사용하여 문자열 데이터를 파일과 같은 객체로 변환
+            # pd.read_csv() 함수를 사용하여 데이터를 DataFrame으로 변환
+            # header=None: 첫 번째 행을 헤더로 사용하지 않음
+            # sep='^': 데이터 구분자로 '^' 사용
+            # names=hcols: 컬럼 이름으로 hcols 리스트 사용
+            # dtype=object: 모든 컬럼의 데이터 타입을 object로 설정
             dp_ = pd.read_csv(StringIO(d1[3]), header=None, sep='^', names=hcols, dtype=object)  # 수신데이터 parsing
 
             print(dp_)  # 실시간체결, 실시간호가 수신 데이터 파싱 결과 확인
